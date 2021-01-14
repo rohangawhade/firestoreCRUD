@@ -1,11 +1,19 @@
+'use strict';
 const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const config = require('./config');
+const studentRoutes = require('./routes/student-routes');
+
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send("Hi");
-})
+app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json());
 
-app.listen(3000, () => {
+app.use('/api', studentRoutes.routes);
+
+app.listen(config.port, () => {
     console.log("server started...");
-    console.log("http://localhost:3000/");
+    console.log(config.url);
 })
